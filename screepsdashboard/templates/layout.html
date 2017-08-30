@@ -1,0 +1,95 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Screeps {{ screeps_user }} Dashboard</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/foundation.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/vendor/font-awesome.min.css')}}">
+    {% block css_include %}
+    {% endblock %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/app.css')}}">
+  </head>
+  <body>
+
+
+    <div class="off-canvas-wrapper">
+      <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+
+        <div class="off-canvas position-left reveal-for-large " id="my-info" data-off-canvas data-position="left">
+          <div class="row column">
+            <br>
+            <div id="menulogo" class="small-centered columns">
+                <a href="{{url_for('index')}}">
+                    <img class="small-centered" src="http://www.leagueofautomatednations.com/badges/users/{{ config['screeps_user'] }}.png">
+                </a>
+            </div>
+            <br>
+            <h5 class="navbar-sitename">Screeps {{ config['screeps_user'] }}<br>GCL: {{ get_gcl_from_points(getuserinfo()['gcl']) }}</h5>
+            <hr>
+
+            <ul class="off-canvas-list navbar">
+
+              <li>
+                  <i class="fa fa-terminal"></i>
+                  <a href="{{url_for('console')}}">Console</a>
+              </li>
+              <li>
+                  <i class="fa fa-user"></i>
+                  <a href="https://screeps.com/a/#!/profile/{{ config['screeps_user'] }}">Screeps Profile</a>
+              </li>
+              {% if config['slack_channel'] %}
+                <li>
+                  <i class="fa fa-slack"></i>
+                    <a href="https://screeps.slack.com/messages/{{ config['slack_channel'] }}/details/" target="_blank">Slack</a>
+                </li>
+              {% endif %}
+              {% if config['github'] %}
+                <li>
+                  <i class="fa fa-github-alt"></i>
+                    <a href="{{ config['github'] }}" target="_blank">Github</a>
+                </li>
+              {% endif %}
+              <li>
+                  <i class="fa fa-terminal"></i>
+                  <a href="https://www.screeps.com" target="_blank">Screeps</a>
+              </li>
+
+
+            </ul>
+          </div>
+        </div>
+        <div id="main" class="off-canvas-content" data-off-canvas-content>
+
+            {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class=flashes>
+                        {% for message in messages %}
+                            <li>{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            {% endwith %}
+
+            {% block content %}
+            {% endblock %}
+
+        </div>
+      </div>
+    </div>
+
+
+
+    <script src="{{url_for('static', filename='js/vendor/jquery.js')}}"></script>
+    <script src="{{url_for('static', filename='js/vendor/what-input.js')}}"></script>
+    <script src="{{url_for('static', filename='js/vendor/foundation.js')}}"></script>
+    <script src="{{url_for('static', filename='js/app.js')}}"></script>
+    {% block js_include %}
+    {% endblock %}
+
+    <script>
+      {% block script %}
+      {% endblock %}
+    </script>
+  </body>
+</html>

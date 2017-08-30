@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="callout primary">
+    <div class="row column">
+        <h1 class='text-center'>{{ config['screeps_user'] }}'s Console</h1>
+        <p  class="lead"></p>
+    </div>
+</div>
+<div id="console_box" style="overflow-y: scroll; height:800px;"></div>
+{% endblock %}
+{% block js_include %}
+    <script src="{{url_for ('static', filename = 'js/ScreepConsole.js')}}"></script>
+{% endblock %}
+{% block script %}
+    {{ super() }}
+    startConsoleMirror()
+{% endblock %}

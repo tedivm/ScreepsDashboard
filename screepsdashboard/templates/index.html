@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="callout primary">
+    <div class="row column">
+        <h1 class='text-center'>{{ config['screeps_user'] }} Dashboard</h1>
+        <p  class="lead"></p>
+    </div>
+</div>
+
+<div>
+Stuff
+</div>
+
+
+{{ getuserinfo()['username'] }}
+
+
+
+{% endblock %}

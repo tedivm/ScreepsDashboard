@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="callout primary">
+    <div class="row column">
+        <h1 class='text-center'>{{ config['screeps_user'] }}'s Memory</h1>
+        <p  class="lead"></p>
+    </div>
+</div>
+<!-- Add Shard Selector - make macro? -->
+<div id="memory_json_viewer"></div>
+
+{% endblock %}
+{% block css_include %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/vendor/jquery.jsonview.css')}}">
+{% endblock %}
+{% block js_include %}
+    <script src="{{url_for ('static', filename = 'js/vendor/jquery.jsonview.min.js')}}"></script>
+    <script src="{{url_for ('static', filename = 'js/ScreepsMemory.js')}}"></script>
+{% endblock %}
+{% block script %}
+    {{ super() }}
+    startScreepsMemory()
+{% endblock %}
