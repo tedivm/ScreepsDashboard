@@ -1,0 +1,13 @@
+{% macro shard_selector() %}
+  {% with shards = get_shards() %}
+    {% if shards %}
+      <div class='row'>
+        <div id="shard_selector" class="column small-centered" data-active-shard='shard0'>
+        {% for shard in shards %}
+          <a href="#" id="shard_selection_{{ shard }}" class="button shard_selection secondary" data-shard="{{ shard }}">{{ shard }}</a>
+        {% endfor %}
+      </div>
+      </div>
+    {% endif %}
+  {% endwith %}
+{% endmacro %}
