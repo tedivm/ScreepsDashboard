@@ -235,3 +235,39 @@ function loadScreepsWalletPage (page) {
     }
   })
 }
+
+function startScreepsSegments () {
+  $('#shard_selection_shard0').removeClass('secondary').addClass('primary')
+  loadScreepsSegment()
+  $('.shard_selection').click(function(event){
+    $('#shard_selector').data('activeShard', $(this).data('shard'))
+    $('.shard_selection').removeClass('primary').addClass('secondary')
+    $(this).removeClass('secondary').addClass('primary')
+    loadScreepsSegment()
+  })
+  $('#segment_selector').change(function(){
+    loadScreepsSegment()
+  })
+}
+
+function loadScreepsSegment() {
+
+  var activeShard = $('#shard_selector').data('activeShard')
+  if(!activeShard) {
+    activeShard = 'shard0'
+  }
+  var segment = $('#segment_selector').find(":selected").text();
+  console.log('attempting to load segment ' + segment + ' from ' + activeShard)
+  var url = 'segments/' + activeShard + '/' + segment + '.json'
+  $.ajax({
+      url: url,
+      type: "GET",
+      success: function (data) {
+        $('#segment_text').val(data)
+      },
+      dataType: "json",
+      timeout: 10000
+  })
+
+
+}

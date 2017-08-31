@@ -60,3 +60,7 @@ td.memorysize {
 td.currency {
   text-align: right
 }
+
+#segment_text {
+  height: 40em;
+}

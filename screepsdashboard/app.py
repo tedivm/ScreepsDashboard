@@ -101,9 +101,13 @@ def memory_meta_json(shard):
 
 
 
+@app.route('/segments')
+def segments():
+    return render_template("segments.html")
 
 
-@app.route('/segment/<shard>/<int:segment_id>.json')
+
+@app.route('/segments/<shard>/<int:segment_id>.json')
 def segment_json(shard, segment_id):
     segment = screeps.get_segment(shard, segment_id)
     if 'data' not in segment:
