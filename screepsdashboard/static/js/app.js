@@ -132,3 +132,108 @@ function loadScreepsMemory () {
     }
   })
 }
+
+function startScreepsWallet () {
+  loadScreepsWalletPage(0)
+}
+
+function loadScreepsWalletPage (page) {
+  console.log('load screeps wallet page ' + page)
+  getWalletPage({
+    'page': page,
+    'success': function (data) {
+      $('#wallet_list tr').remove()
+      if(!data['list']) {
+        return
+      }
+
+      var table_contents = ''
+
+      table_contents += '<thead>\n'
+      table_contents += '  <tr>\n'
+
+
+      table_contents += '    <th>\n'
+      table_contents += '      Date\n'
+      table_contents += '    </th>\n'
+
+      table_contents += '    <th>\n'
+      table_contents += '      Shard\n'
+      table_contents += '    </th>\n'
+
+      table_contents += '    <th>\n'
+      table_contents += '      Tick\n'
+      table_contents += '    </th>\n'
+
+      table_contents += '    <th>\n'
+      table_contents += '      Description\n'
+      table_contents += '    </th>\n'
+
+      table_contents += '    <th>\n'
+      table_contents += '      Change\n'
+      table_contents += '    </th>\n'
+
+      table_contents += '    <th>\n'
+      table_contents += '      Balance\n'
+      table_contents += '    </th>\n'
+
+
+
+      table_contents += '  </tr>\n'
+      table_contents += '</thead>\n'
+
+      table_contents += '<tbody>\n'
+
+      for (var line of data['list']) {
+        table_contents += '<tr>'
+        table_contents += '  <td>' + line['date'] + '</td>\n'
+        table_contents += '  <td>' + line['shard'] + '</td>\n'
+        table_contents += '  <td>' + line['tick'] + '</td>\n'
+
+        switch (line['type']) {
+          case 'market.buy':
+            table_contents += '  <td>Bought ' + line['market']['resourceType'] + ' from ' + '<a href="https://screeps.com/a/#!/room/' + line['shard'] + '/' + line['market']['targetRoomName'] + '" target="_blank">' + line['market']['targetRoomName'] + '</a>' + '</td>\n'
+            break;
+          case 'market.sell':
+            table_contents += '  <td>Sold ' + line['market']['resourceType'] + ' to ' + '<a href="https://screeps.com/a/#!/room/' + line['shard'] + '/' + line['market']['targetRoomName'] + '" target="_blank">' + line['market']['targetRoomName'] + '</a>' + '</td>\n'
+            break;
+          case 'market.fee':
+            if(line['market']['order']) {
+              table_contents += '  <td>Market Fee - Create order to ' + line['market']['order']['type'] + ' ' + line['market']['order']['totalAmount'] + ' ' + line['market']['order']['resourceType'] + ' at ' + line['market']['order']['price'] + ' in ' + '<a href="https://screeps.com/a/#!/room/' + line['shard'] + '/' + line['market']['order']['roomName'] + '" target="_blank">' + line['market']['order']['roomName'] + '</a>' + '</td>\n'
+            } else if(line['market']['extendOrder']) {
+              table_contents += '  <td>Market Fee - Extend order ' + line['market']['extendOrder']['orderId'] + ' by ' + line['market']['extendOrder']['addAmount'] + '</td>\n'
+            } else {
+              table_contents += '  <td>Market Fee</td>\n'
+            }
+            break;
+          default:
+            table_contents += '  <td></td>\n'
+            break;
+        }
+
+        table_contents += '  <td class="currency">' + line['change'].toFixed(2) + '</td>\n'
+        table_contents += '  <td class="currency">' + line['balance'].toFixed(2) + '</td>\n'
+        table_contents += '</tr>'
+      }
+      table_contents += '</tbody>\n'
+      $('#wallet_list').append(table_contents)
+      $('#wallet_list').data('page', data['page'])
+
+      $('#wallet_nav').empty()
+      if(data['page'] > 0) {
+        $('#wallet_nav').append('<div id="wallet_nav_newer" class="column small-2 paginate newer">Newer</div>')
+        $('#wallet_nav_newer').one('click', function (data) {
+          console.log('hit newer button')
+          loadScreepsWalletPage($('#wallet_list').data('page')-1)
+        })
+      }
+      if(data['hasMore']) {
+        $('#wallet_nav').append('<div id="wallet_nav_older" class="column small-2 paginate older">Older</div>')
+        $('#wallet_nav_older').one('click', function (data) {
+          console.log('hit older button')
+          loadScreepsWalletPage($('#wallet_list').data('page')+1)
+        })
+      }
+    }
+  })
+}

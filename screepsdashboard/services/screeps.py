@@ -45,14 +45,17 @@ def get_segment(shard, segmentid):
     segment = client.get_segment(segmentid, shard)
     return segment
 
+
 @cache.cache(expire=120)
 def get_shards():
     client = get_client()
     return client.get_shards()
 
 
-
-get_shards
+@cache.cache(expire=30)
+def get_wallet(page=None):
+    client = get_client()
+    return client.market_history(page=page)
 
 
 def import_socket():

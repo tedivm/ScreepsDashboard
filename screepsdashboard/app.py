@@ -69,8 +69,6 @@ def memory_keys_json(shard):
     return r
 
 
-
-
 @app.route('/memory/meta/<shard>.json')
 def memory_meta_json(shard):
     memory = screeps.get_memory(shard)
@@ -119,5 +117,23 @@ def segment_json(shard, segment_id):
 def shard_list():
     shards = screeps.get_shards()
     r = Response(response=json.dumps(shards), status=200, mimetype="application/json")
+    r.headers["Content-Type"] = "application/json; charset=utf-8"
+    return r
+
+
+
+#
+# Wallet
+#
+
+@app.route('/wallet')
+def wallet():
+    return render_template("wallet.html")
+
+# This is essentially a mirror of the game server's api for market data, but with a cache built on top.
+@app.route('/wallet/<int:page>.json')
+def wallet_page(page):
+    transactions = screeps.get_wallet(page)
+    r = Response(response=json.dumps(transactions), status=200, mimetype="application/json")
     r.headers["Content-Type"] = "application/json; charset=utf-8"
     return r

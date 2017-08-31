@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="callout primary">
+    <div class="row column">
+        <h1 class='text-center'>{{ config['screeps_user'] }}'s Wallet</h1>
+        <p  class="lead"></p>
+    </div>
+</div>
+<table id="wallet_list"></table>
+<div id="wallet_nav" class="row"></div>
+{% endblock %}
+{% block js_include %}
+    <script src="{{url_for ('static', filename = 'js/ScreepsWallet.js')}}"></script>
+{% endblock %}
+{% block script %}
+    {{ super() }}
+    startScreepsWallet()
+{% endblock %}
