@@ -40,10 +40,18 @@ def memory():
 
 @app.route('/memory/<shard>.json')
 def memory_json(shard):
+    path = request.args.get('path', False)
     memory = screeps.get_memory(shard)
     if 'data' not in memory:
         memory['data'] = '{}'
-    r = Response(response=json.dumps(memory['data']), status=200, mimetype="application/json")
+    if path:
+        if path in memory['data']:
+            data = memory['data'][path]
+        else:
+            data = False
+    else:
+        data = memory['data']
+    r = Response(response=json.dumps(data), status=200, mimetype="application/json")
     r.headers["Content-Type"] = "application/json; charset=utf-8"
     return r
 
@@ -59,6 +67,41 @@ def memory_keys_json(shard):
     r = Response(response=json.dumps(keys), status=200, mimetype="application/json")
     r.headers["Content-Type"] = "application/json; charset=utf-8"
     return r
+
+
+
+
+@app.route('/memory/meta/<shard>.json')
+def memory_meta_json(shard):
+    memory = screeps.get_memory(shard)
+    if 'data' not in memory:
+        memory['data'] = '{}'
+
+    ret = []
+
+    keys = list(memory['data'].keys())
+    keys = sorted(keys, key=str.lower)
+
+    for key in keys:
+        key_info = {}
+        key_info['key'] = key
+        data = memory['data'][key]
+        key_info['size'] = len(json.dumps(data))+len(key)+2 # 2 for the : and trailing ,
+        if isinstance(data, (int, float, str, bool)):
+            key_info['scalar'] = True
+            key_info['data'] = data
+        else:
+            key_info['scalar'] = False
+        ret.append(key_info)
+
+
+    r = Response(response=json.dumps(ret), status=200, mimetype="application/json")
+    r.headers["Content-Type"] = "application/json; charset=utf-8"
+    return r
+
+
+
+
 
 
 

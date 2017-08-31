@@ -42,3 +42,11 @@ ul.navbar .fa {
 #console_box {
   margin-left: 10px
 }
+
+td.memorykey {
+  width: 12em
+}
+
+td.memorysize {
+  width: 6em
+}

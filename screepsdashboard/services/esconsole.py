@@ -29,13 +29,19 @@ def get_records(start_at = 'now-1m', max_records=100, order='asc'):
     messages = []
     for hit in results['hits']:
       record = hit['_source']
+
+      if '.' in record['timestamp']:
+          timeformat = "%Y-%m-%dT%H:%M:%S.%f"
+      else:
+          timeformat = "%Y-%m-%dT%H:%M:%S"
+
       if isinstance(start_at, datetime):
-          row_time = datetime.strptime(record['timestamp'],"%Y-%m-%dT%H:%M:%S.%f")
+          row_time = datetime.strptime(record['timestamp'], timeformat)
           if row_time < start_at:
               continue
           start_at = row_time
       else:
-          start_at = datetime.strptime(record['timestamp'],"%Y-%m-%dT%H:%M:%S.%f")
+          start_at = datetime.strptime(record['timestamp'], timeformat)
 
       messages.append(record)
     return messages
