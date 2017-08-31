@@ -221,16 +221,14 @@ function loadScreepsWalletPage (page) {
 
       $('#wallet_nav').empty()
       if(data['page'] > 0) {
-        $('#wallet_nav').append('<div id="wallet_nav_newer" class="column small-2 paginate newer">Newer</div>')
+        $('#wallet_nav').append('<div id="wallet_nav_newer" class="column small-2 paginate newer"><a href="#" class="button">Newer</a></div>')
         $('#wallet_nav_newer').one('click', function (data) {
-          console.log('hit newer button')
           loadScreepsWalletPage($('#wallet_list').data('page')-1)
         })
       }
       if(data['hasMore']) {
-        $('#wallet_nav').append('<div id="wallet_nav_older" class="column small-2 paginate older">Older</div>')
+        $('#wallet_nav').append('<div id="wallet_nav_older" class="column small-2 paginate older"><a href="#" class="button">Older<a/></div>')
         $('#wallet_nav_older').one('click', function (data) {
-          console.log('hit older button')
           loadScreepsWalletPage($('#wallet_list').data('page')+1)
         })
       }
