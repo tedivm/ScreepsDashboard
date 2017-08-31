@@ -1,16 +1,24 @@
 from flask import Flask, session, redirect, url_for, escape, request, render_template, flash, send_from_directory, Response
 from flask_cors import CORS, cross_origin
 import json
+import pypandoc
 import screepsdashboard.extensions.jinja
 from screepsdashboard.services import esconsole
 from screepsdashboard.services import screeps
 from screepsdashboard import app
 
 
+
 @app.route('/')
 def index():
-    #return render_template("index.html")
-    return redirect(url_for('console'))
+    if 'homepage' not in app.config:
+        return redirect(url_for('console'))
+    if not app.config['homepage']:
+        return redirect(url_for('console'))
+
+    markdown_file = app.config['homepage']
+    content = pypandoc.convert(app.config['homepage'], 'html')
+    return render_template("index.html", content=content)
 
 #
 # Console Controls

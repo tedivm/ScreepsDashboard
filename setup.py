@@ -45,6 +45,7 @@ setup(
     'elasticsearch>=5.0.0,<6.0.0',
     'Flask>=0.12.2,<0.13.0',
     'flask_cors>=3.0,<3.1',
+    'pypandoc>=1.4.0,<1.5.0',
     'PyYAML>=3.12,<3.13',
     'requests>=2.18.0,<2.19',
     'screepsapi>=0.4.0,<0.5'
@@ -52,7 +53,6 @@ setup(
 
   extras_require={
     'dev': [
-      'pypandoc',
       'twine',
       'wheel'
     ],
