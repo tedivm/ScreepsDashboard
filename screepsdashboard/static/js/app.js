@@ -50,15 +50,15 @@ function startScreepsMemory () {
       $('#memory_list tr').remove()
       var table_contents = '<tr>\n'
       table_contents += '  <th>\n'
-      table_contents += '    key\n'
+      table_contents += '    Key\n'
       table_contents += '  </th>\n'
 
       table_contents += '  <th>\n'
-      table_contents += '    size\n'
+      table_contents += '    Size\n'
       table_contents += '  </th>\n'
 
       table_contents += '  <th>\n'
-      table_contents += '    data\n'
+      table_contents += '    Data\n'
       table_contents += '  </th>\n'
 
       table_contents += '</tr>\n'

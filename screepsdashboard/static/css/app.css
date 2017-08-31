@@ -44,9 +44,15 @@ ul.navbar .fa {
 }
 
 td.memorykey {
-  width: 12em
+  width: 12em;
+  vertical-align: top;
 }
 
 td.memorysize {
-  width: 6em
+  width: 6em;
+  vertical-align: top;
+}
+
+#memorylist {
+  vertical-align: top
 }
