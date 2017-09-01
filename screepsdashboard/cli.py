@@ -1,6 +1,7 @@
 import click
 from datetime import datetime
 from screepsdashboard.services import esconsole
+from screepsdashboard.services import screeps
 import time
 
 @click.group()
@@ -9,7 +10,7 @@ def cli(ctx):
     if ctx.parent:
         print(ctx.parent.get_help())
 
-@cli.command(short_help="Steam the Screeps console to stdout")
+@cli.command(short_help="Stream the Screeps console to stdout")
 @click.option('--start_at', default='now-1m')
 def stream(start_at):
     message_time = start_at
@@ -24,6 +25,13 @@ def stream(start_at):
             else:
                 print(message['message'])
             time.sleep(0.05)
+
+
+@cli.command(short_help="Stream the Screeps console to elasticsearch")
+def log():
+    screeps.import_socket()
+    pass
+
 
 if __name__ == '__main__':
     cli()

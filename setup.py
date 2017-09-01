@@ -41,12 +41,14 @@ setup(
 
   install_requires=[
     'beaker==1.8.0',
+    'beautifulsoup4>=4.6.0,<4.7.0',
     'click>=5.0,<6.0',
     'elasticsearch>=5.0.0,<6.0.0',
     'Flask>=0.12.2,<0.13.0',
     'flask_cors>=3.0,<3.1',
     'pypandoc>=1.4.0,<1.5.0',
     'PyYAML>=3.12,<3.13',
+    'lxml==3.8.0',
     'requests>=2.18.0,<2.19',
     'screepsapi>=0.4.0,<0.5'
   ],

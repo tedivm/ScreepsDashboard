@@ -1,0 +1,19 @@
+[Unit]
+Description=Screeps Dashboard Statistics Collection
+After=network-online.target
+
+[Service]
+Restart=always
+RestartSec=5
+Type=simple
+User=screepsdash
+Group=screepsdash
+WorkingDirectory=/home/screepsdash/
+ExecStart=/opt/screepsdash/bin/screepsdashlog
+StandardOutput=syslog
+StandardError=syslog
+Restart=always
+Environment=PYTHONUNBUFFERED=true
+
+[Install]
+WantedBy=multi-user.target

@@ -1,6 +1,10 @@
+from bs4 import BeautifulSoup
+from datetime import datetime
+from elasticsearch import Elasticsearch
 import screepsapi
 from screepsdashboard.services.cache import cache
-
+import time
+import json
 from screepsdashboard import app
 
 def get_client():
@@ -62,11 +66,11 @@ def import_socket():
     screepsconsole = ScreepsConsole(
         user=app.config['screeps_user'],
         password=app.config['screeps_password'],
-        ptr=app.config('screeps_ptr', False),
+        ptr=app.config.get('screeps_ptr', False),
     )
     screepsconsole.set_es_host(
-        host=app.config('es_host', 'localhost'),
-        index_prefix=app.config('es_index_prefix', 'screepsdash-%s-' % (app.config['screeps_user'],)),
+        host=app.config.get('es_host', 'localhost'),
+        index_prefix=app.config.get('es_index_prefix', 'screepsdash-%s-' % (app.config['screeps_user'],)),
     )
     screepsconsole.start()
 
@@ -74,7 +78,8 @@ def import_socket():
 
 
 ## Python before 2.7.10 or so has somewhat broken SSL support that throws a warning; suppress it
-import warnings; warnings.filterwarnings('ignore', message='.*true sslcontext object.*')
+import warnings
+warnings.filterwarnings('ignore', message='.*true sslcontext object.*')
 
 class ScreepsConsole(screepsapi.Socket):
 
@@ -86,12 +91,12 @@ class ScreepsConsole(screepsapi.Socket):
         self.subscribe_user('console')
         self.subscribe_user('cpu')
 
-    def process_log(self, ws, message):
-
+    def process_log(self, ws, message, shard):
         message_soup = BeautifulSoup(message,  "lxml")
         body = {
-            'timestamp': datetime.now(),
-            'mtype': 'log'
+            'timestamp': datetime.utcnow(),
+            'mtype': 'log',
+            'shard': shard
         }
 
         if message_soup.log:
@@ -125,28 +130,30 @@ class ScreepsConsole(screepsapi.Socket):
         body['message_raw'] = message_text
         message_text.strip()
         body['message'] = message_text.replace("\t", ' ')
-        res = self.es.index(index="screeps-console-" + time.strftime("%Y_%m"), doc_type="log", body=body)
+        res = self.es.index(index=self.index_prefix + 'console-' + time.strftime("%Y_%m"), doc_type="log", body=body)
 
-    def process_results(self, ws, message):
+    def process_results(self, ws, message, shard):
         body = {
-            'timestamp': datetime.now(),
+            'timestamp': datetime.utcnow(),
             'message': message,
-            'mtype': 'results'
+            'mtype': 'results',
+            'shard': shard
         }
-        res = self.es.index(index="screeps-console-" + time.strftime("%Y_%m"), doc_type="log", body=body)
+        res = self.es.index(index=self.index_prefix + 'console-' + time.strftime("%Y_%m"), doc_type="log", body=body)
 
-    def process_error(self, ws, message):
+    def process_error(self, ws, message, shard):
         body = {
-            'timestamp': datetime.now(),
+            'timestamp': datetime.utcnow(),
             'message': message,
             'mtype': 'error',
-            'severity': 5
+            'severity': 5,
+            'shard': shard
         }
-        res = self.es.index(index="screeps-console-" + time.strftime("%Y_%m"), doc_type="log", body=body)
+        res = self.es.index(index=self.index_prefix + 'console-' + time.strftime("%Y_%m"), doc_type="log", body=body)
 
     def process_cpu(self, ws, data):
         body = {
-            'timestamp': datetime.now()
+            'timestamp': datetime.utcnow()
         }
 
         if 'cpu' in data:
@@ -156,4 +163,4 @@ class ScreepsConsole(screepsapi.Socket):
             body['memory'] = data['memory']
 
         if 'cpu' in data or 'memory' in data:
-            res = self.es.index(index="screeps-performance-" + time.strftime("%Y_%m"), doc_type="performance", body=body)
+            res = self.es.index(index=self.index_prefix + 'performance-' + time.strftime("%Y_%m"), doc_type="performance", body=body)
