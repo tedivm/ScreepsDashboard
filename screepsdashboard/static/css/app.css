@@ -64,3 +64,9 @@ td.currency {
 #segment_text {
   height: 40em;
 }
+
+/* Keep the console from having super wide margins */
+div.slog {
+  margin-left: 1em;
+  margin-right: 6em;
+}

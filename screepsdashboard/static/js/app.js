@@ -15,7 +15,10 @@ function startConsoleMirror () {
       message['severity'] = 3
     }
     var severityClass = severity[message['severity']]
-    $('#console_box').append('<div class="log ' + severityClass + '">' + message['message'] + '</div>')
+    var message_html = '<div class="columns small-1">' + message['tick'] + '</div>'
+    message_html += '<div class="columns small-1">' + message['group'] + '</div>'
+    message_html += '<div class="columns small-10">' + message['message'] + '</div>'
+    $('#console_box').append('<div class="row slog ' + severityClass + '">' + message_html + '</div>')
   }
 
   function scrollToNewestConsoleMessage () {
