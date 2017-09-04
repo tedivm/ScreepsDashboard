@@ -87,3 +87,7 @@ div.error, div.fatal {
 div.trace, div.debug {
   color: #676767;
 }
+
+div#homepage_content {
+  margin: 1em;
+}
