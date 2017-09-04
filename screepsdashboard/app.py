@@ -4,6 +4,7 @@ import json
 import pypandoc
 import screepsdashboard.extensions.jinja
 from screepsdashboard.services import esconsole
+from screepsdashboard.services import markdown
 from screepsdashboard.services import screeps
 from screepsdashboard import app
 
@@ -15,10 +16,7 @@ def index():
         return redirect(url_for('console'))
     if not app.config['homepage']:
         return redirect(url_for('console'))
-
-    markdown_file = app.config['homepage']
-    content = pypandoc.convert(app.config['homepage'], 'html')
-    return render_template("index.html", content=content)
+    return render_template("index.html", content=markdown.markdown_convert(app.config['homepage']))
 
 #
 # Console Controls
