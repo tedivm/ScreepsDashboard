@@ -121,6 +121,7 @@ function loadScreepsMemory () {
           var table_element = $(this)
           screepsmemory.getMemory({
             'key': $(this).data('memoryKey'),
+            'shard': activeShard,
             'success': function (data) {
               table_element.data('memoryLoaded', true)
               table_element.JSONView(data, {collapsed: true})
