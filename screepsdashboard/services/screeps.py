@@ -120,7 +120,8 @@ class ScreepsConsole(screepsapi.Socket):
         body = {
             'timestamp': datetime.utcnow(),
             'mtype': 'log',
-            'shard': shard
+            'shard': shard,
+            'raw': message
         }
 
         if message_soup.log:
@@ -151,7 +152,6 @@ class ScreepsConsole(screepsapi.Socket):
                 body[key] = elem
 
         message_text = message_soup.get_text()
-        body['message_raw'] = message_text
         message_text.strip()
         body['message'] = message_text.replace("\t", ' ')
         res = self.es.index(index=self.index_prefix + 'console-' + time.strftime("%Y_%m"), doc_type="log", body=body)
