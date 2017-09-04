@@ -70,7 +70,7 @@ def import_socket():
     )
     screepsconsole.set_es_host(
         host=app.config.get('es_host', 'localhost'),
-        index_prefix=app.config.get('es_index_prefix', 'screepsdash-%s-' % (app.config['screeps_user'],)),
+        index_prefix=app.config.get('es_index_prefix', 'screepsdash-%s-' % (app.config['screeps_user'].lower(),)),
     )
     screepsconsole.start()
 

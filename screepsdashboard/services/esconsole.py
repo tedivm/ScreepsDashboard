@@ -7,7 +7,7 @@ from screepsdashboard import app
 
 def get_records(start_at = 'now-1m', max_records=100, order='asc'):
     es = Elasticsearch()
-    index = app.config.get('es_index_prefix', 'screepsdash-%s-' % (app.config['screeps_user'],))
+    index = app.config.get('es_index_prefix', 'screepsdash-%s-' % (app.config['screeps_user'].lower(),))
     results = es.search(index="%sconsole*" % (index), doc_type='log', body={
       "size": max_records,
       "query": {
