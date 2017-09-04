@@ -79,3 +79,11 @@ div.even {
 div.odd {
   background-color: #e4ebf1;
 }
+
+div.error, div.fatal {
+  color: #ff0000;
+}
+
+div.trace, div.debug {
+  color: #676767;
+}

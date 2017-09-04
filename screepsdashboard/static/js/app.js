@@ -16,14 +16,18 @@ function startConsoleMirror () {
     }
     var severityClass = severity[message['severity']]
     if(!message['tick']) {
-      message['tick'] = ''
+      message['tick'] = '-'
       var rowClass = ''
     } else {
       var rowClass = message['tick'] % 2 == 0 ? ' even' : ' odd'
     }
+    if(!message['group']) {
+      message['group'] = '-'
+    }
+
     var message_html = '<div class="columns small-1">' + message['tick'] + '</div>'
     message_html += '<div class="columns small-1">' + message['group'] + '</div>'
-    message_html += '<div class="columns small-10">' + message['message'] + '</div>'
+    message_html += '<div class="columns small-10">' + message['message'].replace(/(?:\r\n|\r|\n)/g, '<br />'); + '</div>'
     $('#console_box').append('<div class="row slog ' + severityClass + rowClass + '">' + message_html + '</div>')
   }
 
