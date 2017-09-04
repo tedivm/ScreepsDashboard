@@ -68,5 +68,14 @@ td.currency {
 /* Keep the console from having super wide margins */
 div.slog {
   margin-left: 1em;
-  margin-right: 6em;
+  margin-right: 1em;
+}
+
+/* Alternate console message color based on tick time */
+div.even {
+  background-color: white;
+}
+
+div.odd {
+  background-color: #e4ebf1;
 }
