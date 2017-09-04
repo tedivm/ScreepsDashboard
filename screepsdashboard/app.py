@@ -107,12 +107,13 @@ def memory_meta_json(shard):
 
 
 
-
+#
+# Segment Data
+#
 
 @app.route('/segments')
 def segments():
     return render_template("segments.html")
-
 
 
 @app.route('/segments/<shard>/<int:segment_id>.json')
@@ -147,5 +148,17 @@ def wallet():
 def wallet_page(page):
     transactions = screeps.get_wallet(page)
     r = Response(response=json.dumps(transactions), status=200, mimetype="application/json")
+    r.headers["Content-Type"] = "application/json; charset=utf-8"
+    return r
+
+
+
+#
+# Meta
+#
+@app.route('/user/shard.json')
+def primary_shard():
+    shard = screeps.get_primary_shard()
+    r = Response(response=json.dumps({'shard':shard}), status=200, mimetype="application/json")
     r.headers["Content-Type"] = "application/json; charset=utf-8"
     return r

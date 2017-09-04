@@ -56,6 +56,30 @@ def get_shards():
     return client.get_shards()
 
 
+@cache.cache(expire=120)
+def get_rooms():
+    client = get_client()
+    overviewresults = client.overview()
+    shards = get_shards()
+    rooms = {}
+    for shard in shards:
+        rooms[shard] = overviewresults['shards'][shard]['rooms']
+    return rooms
+
+
+@cache.cache(expire=120)
+def get_primary_shard():
+    shards = get_shards()
+    rooms = get_rooms()
+    currooms = 0
+    curshard = 'shard0'
+    for shard in shards:
+        if shard in rooms and len(rooms[shard]) > currooms:
+            curshard = shard
+            currooms = len(rooms[shard])
+    return curshard
+
+
 @cache.cache(expire=30)
 def get_wallet(page=None):
     client = get_client()

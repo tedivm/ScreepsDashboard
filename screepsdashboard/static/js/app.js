@@ -42,7 +42,6 @@ function startConsoleMirror () {
 }
 
 function startScreepsMemory () {
-  $('#shard_selection_shard0').removeClass('secondary').addClass('primary')
   loadScreepsMemory()
   $('.shard_selection').click(function(event){
     $('#shard_selector').data('activeShard', $(this).data('shard'))
@@ -238,7 +237,6 @@ function loadScreepsWalletPage (page) {
 }
 
 function startScreepsSegments () {
-  $('#shard_selection_shard0').removeClass('secondary').addClass('primary')
   loadScreepsSegment()
   $('.shard_selection').click(function(event){
     $('#shard_selector').data('activeShard', $(this).data('shard'))
