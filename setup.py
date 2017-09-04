@@ -46,6 +46,7 @@ setup(
     'elasticsearch>=5.0.0,<6.0.0',
     'Flask>=0.12.2,<0.13.0',
     'flask_cors>=3.0,<3.1',
+    'gunicorn>=19.7.1,<20.0.0',
     'pypandoc>=1.4.0,<1.5.0',
     'PyYAML>=3.12,<3.13',
     'lxml==3.8.0',
