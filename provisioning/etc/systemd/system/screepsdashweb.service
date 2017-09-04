@@ -9,7 +9,7 @@ WorkingDirectory=/opt/screepsdash
 Environment="PATH=/opt/screepsdash/env/bin"
 Environment="SETTINGS=/opt/screepsdash/settings"
 Environment="FLASK_APP=/opt/screepsdash/screepsdashboard/app.py"
-ExecStart=/opt/screeps_loan/env/bin/gunicorn --workers 3 --bind unix:/tmp/screepsdash.sock -m 000 screepsdashboard:app
+ExecStart=/opt/screepsdash/env/bin/gunicorn --workers 3 --bind unix:/tmp/screepsdash.sock -m 000 screepsdashboard.app:app
 
 [Install]
 WantedBy=multi-user.target
