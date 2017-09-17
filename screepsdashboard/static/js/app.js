@@ -45,13 +45,31 @@ function startConsoleMirror () {
     on_finish: scrollToNewestConsoleMessage,
     timeout: 1000
   })
-  setInterval(function () {
+
+  var consoleInterval = setInterval(function () {
     screepsconsole.poll({
       on_message: appendToConsole,
       on_finish: scrollToNewestConsoleMessage,
       timeout: 1000
     })
   }, 1500)
+
+
+  $('#console_query').on('keyup', function (e) {
+    if (e.keyCode == 13) {
+      // Do something
+      var query = $(this).val()
+      clearInterval(consoleInterval)
+      consoleInterval = setInterval(function () {
+        screepsconsole.poll({
+          query: query,
+          on_message: appendToConsole,
+          on_finish: scrollToNewestConsoleMessage,
+          timeout: 1000
+        })
+      }, 1500)
+    }
+  })
 }
 
 function startScreepsMemory () {

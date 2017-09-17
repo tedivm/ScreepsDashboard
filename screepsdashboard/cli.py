@@ -11,11 +11,12 @@ def cli(ctx):
         print(ctx.parent.get_help())
 
 @cli.command(short_help="Stream the Screeps console to stdout")
+@click.option('--query', default='*')
 @click.option('--start_at', default='now-1m')
-def stream(start_at):
+def stream(query, start_at):
     message_time = start_at
     while True:
-        messages = esconsole.get_records(message_time)
+        messages = esconsole.query_records(query, start_at=message_time)
         if 'message' not in messages or len(messages['message']):
             time.sleep(1.5)
         for message in messages:

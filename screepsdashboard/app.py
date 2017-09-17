@@ -30,7 +30,8 @@ def console():
 @app.route('/console_messages.json')
 def console_messages():
     start_at = request.args.get('start_at', 'now-1m')
-    messages = esconsole.get_records(start_at)
+    query = request.args.get('query', '*')
+    messages = esconsole.query_records(query, start_at=start_at)
     r = Response(response=json.dumps(messages), status=200, mimetype="application/json")
     r.headers["Content-Type"] = "application/json; charset=utf-8"
     return r

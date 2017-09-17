@@ -5,13 +5,20 @@ import time
 
 from screepsdashboard import app
 
-def get_records(start_at = 'now-1m', max_records=100, order='asc'):
+def query_records(query, start_at = 'now-1m', max_records=100, order='asc', default_field="_all"):
     es = Elasticsearch()
     index = app.config.get('es_index_prefix', 'screepsdash-%s-' % (app.config['screeps_user'].lower(),))
     results = es.search(index="%sconsole*" % (index), doc_type='log', body={
       "size": max_records,
       "query": {
         "bool" : {
+            "must": [
+                {"query_string": {
+                  "default_field": default_field,
+                  "default_operator": "AND",
+                  "query": query
+                }}
+            ],
             "filter" : {
                 "range" : {
                     "timestamp" : {
