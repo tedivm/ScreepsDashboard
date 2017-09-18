@@ -125,14 +125,6 @@ def segment_json(shard, segment_id):
     return r
 
 
-@app.route('/shard_list.json')
-def shard_list():
-    shards = screeps.get_shards()
-    r = Response(response=json.dumps(shards), status=200, mimetype="application/json")
-    r.headers["Content-Type"] = "application/json; charset=utf-8"
-    return r
-
-
 
 #
 # Wallet
@@ -155,6 +147,15 @@ def wallet_page(page):
 #
 # Meta
 #
+
+@app.route('/shard_list.json')
+def shard_list():
+    shards = screeps.get_shards()
+    r = Response(response=json.dumps(shards), status=200, mimetype="application/json")
+    r.headers["Content-Type"] = "application/json; charset=utf-8"
+    return r
+
+
 @app.route('/user/shard.json')
 def primary_shard():
     shard = screeps.get_primary_shard()
