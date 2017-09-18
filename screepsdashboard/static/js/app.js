@@ -279,27 +279,35 @@ function startScreepsOrders () {
       table_contents += '<thead>\n'
       table_contents += '  <tr>\n'
 
-      table_contents += '    <th>\n'
+      table_contents += '    <th class="created">\n'
       table_contents += '      Created\n'
       table_contents += '    </th>\n'
 
-      table_contents += '    <th>\n'
+      table_contents += '    <th class="shard">\n'
       table_contents += '      Shard\n'
       table_contents += '    </th>\n'
 
-      table_contents += '    <th>\n'
+      table_contents += '    <th class="room">\n'
       table_contents += '      Room\n'
       table_contents += '    </th>\n'
 
-      table_contents += '    <th>\n'
+      table_contents += '    <th class="type">\n'
+      table_contents += '      Type\n'
+      table_contents += '    </th>\n'
+
+      table_contents += '    <th class="resource">\n'
       table_contents += '      Resource\n'
       table_contents += '    </th>\n'
 
-      table_contents += '    <th>\n'
+      table_contents += '    <th class="price">\n'
+      table_contents += '      Price\n'
+      table_contents += '    </th>\n'
+
+      table_contents += '    <th class="remaining">\n'
       table_contents += '      Remaining\n'
       table_contents += '    </th>\n'
 
-      table_contents += '    <th>\n'
+      table_contents += '    <th class="amount">\n'
       table_contents += '      Amount\n'
       table_contents += '    </th>\n'
 
@@ -311,7 +319,13 @@ function startScreepsOrders () {
       for (var shard of Object.keys(data['shards'])) {
         for (var order of data['shards'][shard]) {
           console.log(`${order.created} ${order.active} ${order.type} ${order.amount} ${order.remainingAmount} ${order.resourceType} ${order.price} ${order.totalAmount} ${order.roomName}`)
-          table_contents += '  <tr>\n'
+
+          if (order.active) {
+            table_contents += `  <tr class="active ${order.type} ${order.resourceType}">\n`
+          } else {
+            table_contents += `  <tr class="inactive ${order.type} ${order.resourceType}">\n`
+          }
+
           table_contents += '    <td>\n'
           table_contents += `      ${order.created}\n`
           table_contents += '    </td>\n'
@@ -333,7 +347,15 @@ function startScreepsOrders () {
           table_contents += '    </td>\n'
 
           table_contents += '    <td>\n'
+          table_contents += `      ${order.type}\n`
+          table_contents += '    </td>\n'
+
+          table_contents += '    <td>\n'
           table_contents += `      ${order.resourceType}\n`
+          table_contents += '    </td>\n'
+
+          table_contents += '    <td>\n'
+          table_contents += `      ${order.price}\n`
           table_contents += '    </td>\n'
 
           table_contents += '    <td>\n'
