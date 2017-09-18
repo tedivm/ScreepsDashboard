@@ -143,6 +143,22 @@ def wallet_page(page):
     return r
 
 
+#
+# Market
+#
+
+@app.route('/orders.html')
+def orders():
+    return render_template("orders.html")
+
+
+@app.route('/orders.json')
+def orders_json():
+    orders = screeps.get_orders()
+    r = Response(response=json.dumps(orders), status=200, mimetype="application/json")
+    r.headers["Content-Type"] = "application/json; charset=utf-8"
+    return r
+
 
 #
 # Meta

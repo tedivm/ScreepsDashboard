@@ -267,6 +267,98 @@ function loadScreepsWalletPage (page) {
   })
 }
 
+
+
+
+function startScreepsOrders () {
+  getOrders({
+    'success': function (data) {
+      console.log(data)
+      var table_contents = ''
+
+      table_contents += '<thead>\n'
+      table_contents += '  <tr>\n'
+
+      table_contents += '    <th>\n'
+      table_contents += '      Created\n'
+      table_contents += '    </th>\n'
+
+      table_contents += '    <th>\n'
+      table_contents += '      Shard\n'
+      table_contents += '    </th>\n'
+
+      table_contents += '    <th>\n'
+      table_contents += '      Room\n'
+      table_contents += '    </th>\n'
+
+      table_contents += '    <th>\n'
+      table_contents += '      Resource\n'
+      table_contents += '    </th>\n'
+
+      table_contents += '    <th>\n'
+      table_contents += '      Remaining\n'
+      table_contents += '    </th>\n'
+
+      table_contents += '    <th>\n'
+      table_contents += '      Amount\n'
+      table_contents += '    </th>\n'
+
+      table_contents += '  </tr>\n'
+      table_contents += '</thead>\n'
+
+      table_contents += '<tbody>\n'
+
+      for (var shard of Object.keys(data['shards'])) {
+        for (var order of data['shards'][shard]) {
+          console.log(`${order.created} ${order.active} ${order.type} ${order.amount} ${order.remainingAmount} ${order.resourceType} ${order.price} ${order.totalAmount} ${order.roomName}`)
+          table_contents += '  <tr>\n'
+          table_contents += '    <td>\n'
+          table_contents += `      ${order.created}\n`
+          table_contents += '    </td>\n'
+
+          table_contents += '    <td>\n'
+          if (shard) {
+            table_contents += `      ${shard}\n`
+          } else {
+            table_contents += `      &nbsp;`
+          }
+          table_contents += '    </td>\n'
+
+          table_contents += '    <td>\n'
+          if (order.roomName) {
+            table_contents += `      <a href="https://screeps.com/a/#!/room/${shard}/${order.roomName}">${order.roomName}</a>\n`
+          } else {
+            table_contents += `      &nbsp;`
+          }
+          table_contents += '    </td>\n'
+
+          table_contents += '    <td>\n'
+          table_contents += `      ${order.resourceType}\n`
+          table_contents += '    </td>\n'
+
+          table_contents += '    <td>\n'
+          table_contents += `      ${order.remainingAmount}\n`
+          table_contents += '    </td>\n'
+
+          table_contents += '    <td>\n'
+          table_contents += `      ${order.totalAmount}\n`
+          table_contents += '    </td>\n'
+          table_contents += '  </tr>\n'
+        }
+
+        table_contents += '</tbody>\n'
+
+
+        $('#orders_list tr').remove()
+        $('#orders_list').append(table_contents)
+
+      }
+    }
+  })
+}
+
+
+
 function startScreepsSegments () {
   loadScreepsSegment()
   $('.shard_selection').click(function(event){

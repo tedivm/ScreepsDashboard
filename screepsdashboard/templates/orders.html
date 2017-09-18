@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="callout primary">
+    <div class="row column">
+        <h1 class='text-center'>{{ config['screeps_user'] }}'s Orders</h1>
+        <p  class="lead"></p>
+    </div>
+</div>
+<table id="orders_list"></table>
+{% endblock %}
+{% block js_include %}
+    <script src="{{url_for ('static', filename = 'js/ScreepsOrders.js')}}"></script>
+{% endblock %}
+{% block script %}
+    {{ super() }}
+    startScreepsOrders()
+{% endblock %}

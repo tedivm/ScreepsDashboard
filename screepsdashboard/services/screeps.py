@@ -86,6 +86,12 @@ def get_wallet(page=None):
     return client.market_history(page=page)
 
 
+@cache.cache(expire=30)
+def get_orders():
+    client = get_client()
+    return client.my_orders()
+
+
 def import_socket():
     screepsconsole = ScreepsConsole(
         user=app.config['screeps_user'],
