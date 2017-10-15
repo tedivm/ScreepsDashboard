@@ -22,17 +22,19 @@ def get_power():
 
 
 def get_credits():
-    return get_me().get('credits', 0)
+    return get_me().get('money', 0)
 
 
 @cache.cache(expire=120)
 def get_me():
     client = get_client()
     me = client.me()
-    sanitize = ['gcl', 'power', 'credits']
+    sanitize = ['gcl', 'power', 'money']
     for key in sanitize:
         if key not in me:
             me[key] = 0
+
+    print(me)
     return me
 
 

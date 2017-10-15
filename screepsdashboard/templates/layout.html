@@ -25,7 +25,11 @@
                 </a>
             </div>
             <br>
-            <h5 class="navbar-sitename">Screeps {{ config['screeps_user'] }}<br>GCL: {{ get_gcl_from_points(getuserinfo()['gcl']) }}</h5>
+            <h5 class="navbar-sitename">
+              Screeps {{ config['screeps_user'] }}<br>
+              GCL: {{ get_gcl_from_points(getuserinfo()['gcl']) }}<br>
+              Credits: {{ getuserinfo()['money'] | int }}<br>
+            </h5>
             <hr>
 
             <ul class="off-canvas-list navbar">
