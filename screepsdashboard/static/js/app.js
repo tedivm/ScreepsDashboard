@@ -25,10 +25,25 @@ function startConsoleMirror () {
       message['group'] = '-'
     }
 
+    //console.log(Object.keys(message))
+
     var message_html = '<div class="columns small-1">' + message['tick'] + '</div>'
     message_html += '<div class="columns small-1">' + message['group'] + '</div>'
-    message_html += '<div class="columns small-10">' + message['message'].replace(/(?:\r\n|\r|\n)/g, '<br />'); + '</div>'
+    message_html += '<div class="columns small-10">' + filterHtml(message) + '</div>'
     $('#console_box').append('<div class="row slog ' + severityClass + rowClass + '">' + message_html + '</div>')
+  }
+
+  function filterHtml (message) {
+    if (!message['raw'].includes('font')) {
+      return message['raw'].replace(/(?:\r\n|\r|\n)/g, '<br />')
+    }
+
+    var messageHtml = $(message['raw'].replace(/(?:\r\n|\r|\n)/g, '<br />'))
+    var messageText = messageHtml.text()
+    if (messageText.startsWith(message['group'])) {
+      messageHtml.text(messageText.slice(message['group'].length + 1))
+    }
+    return messageHtml.html()
   }
 
   function scrollToNewestConsoleMessage () {
