@@ -238,12 +238,14 @@ function loadScreepsWalletPage (page) {
         table_contents += '  <td>' + line['shard'] + '</td>\n'
         table_contents += '  <td>' + line['tick'] + '</td>\n'
 
+        var resourceLink = `<img src=https://s3.amazonaws.com/static.screeps.com/upload/mineral-icons/${line['market']['resourceType']}.png>`
+
         switch (line['type']) {
           case 'market.buy':
-            table_contents += `<td>Bought ${line['market']['amount']} ${line['market']['resourceType']} for <a href="https://screeps.com/a/#1/room/${line['shard']}/${line['market']['targetRoomName']}" target="_blank">${line['market']['targetRoomName']}</a> from <a href="https://screeps.com/a/#1/room/${line['shard']}/${line['market']['roomName']}" target="_blank">${line['market']['roomName']}</a> at ${line['market']['price']}</td>`
+            table_contents += `<td>Bought ${line['market']['amount']} ${line['market']['resourceType']} ${resourceLink} for <a href="https://screeps.com/a/#1/room/${line['shard']}/${line['market']['targetRoomName']}" target="_blank">${line['market']['targetRoomName']}</a> from <a href="https://screeps.com/a/#1/room/${line['shard']}/${line['market']['roomName']}" target="_blank">${line['market']['roomName']}</a> at ${line['market']['price']}</td>`
             break;
           case 'market.sell':
-            table_contents += `<td>Sold ${line['market']['amount']} ${line['market']['resourceType']} to <a href="https://screeps.com/a/#1/room/${line['shard']}/${line['market']['roomName']}" target="_blank">${line['market']['roomName']}</a> from <a href="https://screeps.com/a/#1/room/${line['shard']}/${line['market']['targetRoomName']}" target="_blank">${line['market']['targetRoomName']}</a> at ${line['market']['price']}</td>`
+            table_contents += `<td>Sold ${line['market']['amount']} ${line['market']['resourceType']} ${resourceLink} to <a href="https://screeps.com/a/#1/room/${line['shard']}/${line['market']['roomName']}" target="_blank">${line['market']['roomName']}</a> from <a href="https://screeps.com/a/#1/room/${line['shard']}/${line['market']['targetRoomName']}" target="_blank">${line['market']['targetRoomName']}</a> at ${line['market']['price']}</td>`
             break;
           case 'market.fee':
             if(line['market']['order']) {
@@ -264,7 +266,8 @@ function loadScreepsWalletPage (page) {
           'maximumFractionDigits': 3
         }
 
-        table_contents += '  <td class="currency">' + line['change'].toLocaleString(undefined, currencyOptions) + '</td>\n'
+        var changeClass = line['change'] > 0 ? 'positive' : 'negative'
+        table_contents += `  <td class="currency ${changeClass}">` + line['change'].toLocaleString(undefined, currencyOptions) + '</td>\n'
         table_contents += '  <td class="currency">' + line['balance'].toLocaleString(undefined, currencyOptions) + '</td>\n'
         table_contents += '</tr>'
       }

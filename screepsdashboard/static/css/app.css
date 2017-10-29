@@ -61,6 +61,14 @@ th.currency, td.currency {
   text-align: right
 }
 
+td.positive {
+  color: green
+}
+
+td.negative {
+  color: red
+}
+
 #segment_text {
   height: 40em;
 }
