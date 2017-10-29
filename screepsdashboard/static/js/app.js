@@ -215,11 +215,11 @@ function loadScreepsWalletPage (page) {
       table_contents += '      Description\n'
       table_contents += '    </th>\n'
 
-      table_contents += '    <th>\n'
+      table_contents += '    <th class="currency">\n'
       table_contents += '      Change\n'
       table_contents += '    </th>\n'
 
-      table_contents += '    <th>\n'
+      table_contents += '    <th class="currency">\n'
       table_contents += '      Balance\n'
       table_contents += '    </th>\n'
 
@@ -232,16 +232,18 @@ function loadScreepsWalletPage (page) {
 
       for (var line of data['list']) {
         table_contents += '<tr>'
-        table_contents += '  <td>' + line['date'] + '</td>\n'
+        console.log(line['date'])
+        var lineDate = new Date(line['date'])
+        table_contents += '  <td>' + dateFormat(lineDate, 'mmmm dS, yyyy, H:MM:ss Z') + '</td>\n'
         table_contents += '  <td>' + line['shard'] + '</td>\n'
         table_contents += '  <td>' + line['tick'] + '</td>\n'
 
         switch (line['type']) {
           case 'market.buy':
-            table_contents += '  <td>Bought ' + line['market']['resourceType'] + ' from ' + '<a href="https://screeps.com/a/#!/room/' + line['shard'] + '/' + line['market']['targetRoomName'] + '" target="_blank">' + line['market']['targetRoomName'] + '</a>' + '</td>\n'
+            table_contents += `<td>Bought ${line['market']['amount']} ${line['market']['resourceType']} for <a href="https://screeps.com/a/#1/room/${line['shard']}/${line['market']['targetRoomName']}" target="_blank">${line['market']['targetRoomName']}</a> from <a href="https://screeps.com/a/#1/room/${line['shard']}/${line['market']['roomName']}" target="_blank">${line['market']['roomName']}</a> at ${line['market']['price']}</td>`
             break;
           case 'market.sell':
-            table_contents += '  <td>Sold ' + line['market']['resourceType'] + ' to ' + '<a href="https://screeps.com/a/#!/room/' + line['shard'] + '/' + line['market']['targetRoomName'] + '" target="_blank">' + line['market']['targetRoomName'] + '</a>' + '</td>\n'
+            table_contents += `<td>Sold ${line['market']['amount']} ${line['market']['resourceType']} to <a href="https://screeps.com/a/#1/room/${line['shard']}/${line['market']['roomName']}" target="_blank">${line['market']['roomName']}</a> from <a href="https://screeps.com/a/#1/room/${line['shard']}/${line['market']['targetRoomName']}" target="_blank">${line['market']['targetRoomName']}</a> at ${line['market']['price']}</td>`
             break;
           case 'market.fee':
             if(line['market']['order']) {
@@ -257,8 +259,13 @@ function loadScreepsWalletPage (page) {
             break;
         }
 
-        table_contents += '  <td class="currency">' + line['change'].toFixed(2) + '</td>\n'
-        table_contents += '  <td class="currency">' + line['balance'].toFixed(2) + '</td>\n'
+        var currencyOptions = {
+          'minimumFractionDigits': 3,
+          'maximumFractionDigits': 3
+        }
+
+        table_contents += '  <td class="currency">' + line['change'].toLocaleString(undefined, currencyOptions) + '</td>\n'
+        table_contents += '  <td class="currency">' + line['balance'].toLocaleString(undefined, currencyOptions) + '</td>\n'
         table_contents += '</tr>'
       }
       table_contents += '</tbody>\n'
