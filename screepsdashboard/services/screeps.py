@@ -33,8 +33,6 @@ def get_me():
     for key in sanitize:
         if key not in me:
             me[key] = 0
-
-    print(me)
     return me
 
 
