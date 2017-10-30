@@ -267,8 +267,8 @@ function loadScreepsWalletPage (page) {
         }
 
         var changeClass = line['change'] > 0 ? 'positive' : 'negative'
-        table_contents += `  <td class="currency ${changeClass}">` + line['change'].toLocaleString(undefined, currencyOptions) + '</td>\n'
-        table_contents += '  <td class="currency">' + line['balance'].toLocaleString(undefined, currencyOptions) + '</td>\n'
+        table_contents += `  <td class="number ${changeClass}">` + line['change'].toLocaleString(undefined, currencyOptions) + '</td>\n'
+        table_contents += '  <td class="number">' + line['balance'].toLocaleString(undefined, currencyOptions) + '</td>\n'
         table_contents += '</tr>'
       }
       table_contents += '</tbody>\n'

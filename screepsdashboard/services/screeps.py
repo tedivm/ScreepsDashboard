@@ -113,8 +113,6 @@ def get_rankings(user):
                 'rank': season['rank'],
                 'score': season['score']
             }
-
-    print(rankings)
     return rankings
 
 

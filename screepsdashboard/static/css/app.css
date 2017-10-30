@@ -57,7 +57,7 @@ td.memorysize {
   vertical-align: top
 }
 
-th.currency, td.currency {
+th.number, td.number {
   text-align: right
 }
 

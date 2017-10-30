@@ -11,10 +11,10 @@
   <thead>
     <tr>
       <th>Season</th>
-      <th>Control Ranking</th>
-      <th>Control Total</th>
-      <th>Power Ranking</th>
-      <th>Power Total</th>
+      <th class="number">Control Ranking</th>
+      <th class="number">Control Total</th>
+      <th class="number">Power Ranking</th>
+      <th class="number">Power Total</th>
     </tr>
   </thead>
   <tbody>
@@ -22,15 +22,15 @@
     <tr>
       <td>{{ season }}</td>
       {% if 'gcl' in rankings[season] %}
-      <td>{{ rankings[season]['gcl'].rank }}</td>
-      <td>{{ '{0:,}'.format(rankings[season]['gcl'].score) }}</td>
+      <td class="number">{{ rankings[season]['gcl'].rank }}</td>
+      <td class="number">{{ '{0:,}'.format(rankings[season]['gcl'].score) }}</td>
       {% else %}
       <td></td>
       <td></td>
       {% endif %}
       {% if rankings[season].power %}
-      <td>{{ rankings[season]['power'].rank }}</td>
-      <td>{{ '{0:,}'.format(rankings[season]['power'].score) }}</td>
+      <td class="number">{{ rankings[season]['power'].rank }}</td>
+      <td class="number">{{ '{0:,}'.format(rankings[season]['power'].score) }}</td>
       {% else %}
       <td></td>
       <td></td>
