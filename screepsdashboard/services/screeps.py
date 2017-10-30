@@ -111,7 +111,7 @@ def get_rankings(user):
                 rankings[season['season']] = {}
             rankings[season['season']]['power'] = {
                 'rank': season['rank'],
-                'score': season['"score"']
+                'score': season['score']
             }
 
     print(rankings)
