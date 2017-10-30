@@ -242,10 +242,10 @@ function loadScreepsWalletPage (page) {
 
         switch (line['type']) {
           case 'market.buy':
-            table_contents += `<td>Bought ${line['market']['amount']} ${line['market']['resourceType']} ${resourceLink} for <a href="https://screeps.com/a/#1/room/${line['shard']}/${line['market']['targetRoomName']}" target="_blank">${line['market']['targetRoomName']}</a> from <a href="https://screeps.com/a/#1/room/${line['shard']}/${line['market']['roomName']}" target="_blank">${line['market']['roomName']}</a> at ${line['market']['price']}</td>`
+            table_contents += `<td><a href="https://screeps.com/a/#1/room/${line['shard']}/${line['market']['roomName']}" target="_blank">${line['market']['roomName']}</a> bought ${line['market']['amount']} ${line['market']['resourceType']} ${resourceLink} from <a href="https://screeps.com/a/#1/room/${line['shard']}/${line['market']['targetRoomName']}" target="_blank">${line['market']['targetRoomName']}</a> at ${line['market']['price']}</td>`
             break;
           case 'market.sell':
-            table_contents += `<td>Sold ${line['market']['amount']} ${line['market']['resourceType']} ${resourceLink} to <a href="https://screeps.com/a/#1/room/${line['shard']}/${line['market']['roomName']}" target="_blank">${line['market']['roomName']}</a> from <a href="https://screeps.com/a/#1/room/${line['shard']}/${line['market']['targetRoomName']}" target="_blank">${line['market']['targetRoomName']}</a> at ${line['market']['price']}</td>`
+            table_contents += `<td><a href="https://screeps.com/a/#1/room/${line['shard']}/${line['market']['targetRoomName']}" target="_blank">${line['market']['targetRoomName']}</a> sold ${line['market']['amount']} ${line['market']['resourceType']} ${resourceLink} to <a href="https://screeps.com/a/#1/room/${line['shard']}/${line['market']['roomName']}" target="_blank">${line['market']['roomName']}</a> at ${line['market']['price']}</td>`
             break;
           case 'market.fee':
             if(line['market']['order']) {
