@@ -178,3 +178,14 @@ def primary_shard():
     r = Response(response=json.dumps({'shard':shard}), status=200, mimetype="application/json")
     r.headers["Content-Type"] = "application/json; charset=utf-8"
     return r
+
+
+#
+# Rankings
+#
+@app.route('/rankings.html')
+def rankings():
+    rankings = screeps.get_rankings(app.config['screeps_user'])
+    seasons = list(rankings.keys())
+    seasons.sort(reverse=True)
+    return render_template("rankings.html", rankings=rankings, seasons=seasons)

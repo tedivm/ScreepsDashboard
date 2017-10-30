@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="callout primary">
+    <div class="row column">
+        <h1 class='text-center'>{{ config['screeps_user'] }}'s Rankings</h1>
+        <p  class="lead"></p>
+    </div>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>Season</th>
+      <th>Control Ranking</th>
+      <th>Control Total</th>
+      <th>Power Ranking</th>
+      <th>Power Total</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for season in seasons %}
+    <tr>
+      <td>{{ season }}</td>
+      {% if 'gcl' in rankings[season] %}
+      <td>{{ rankings[season]['gcl'].rank }}</td>
+      <td>{{ '{0:,}'.format(rankings[season]['gcl'].score) }}</td>
+      {% else %}
+      <td></td>
+      <td></td>
+      {% endif %}
+      {% if rankings[season].power %}
+      <td>{{ rankings[season]['power'].rank }}</td>
+      <td>{{ '{0:,}'.format(rankings[season]['power'].score) }}</td>
+      {% else %}
+      <td></td>
+      <td></td>
+      {% endif %}
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

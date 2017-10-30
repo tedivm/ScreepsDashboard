@@ -92,6 +92,33 @@ def get_orders():
     return client.my_orders()
 
 
+@cache.cache(expire=600)
+def get_rankings(user):
+    client = get_client()
+    rankings = {}
+    gcl_rankings = client.board_find(username=user, mode='world')
+    if 'list'in gcl_rankings:
+        for season in gcl_rankings['list']:
+            rankings[season['season']] = {}
+            rankings[season['season']]['gcl'] = {
+                'rank': season['rank'],
+                'score': season['score']
+            }
+    power_rankings = client.board_find(username=user, mode='power')
+    if 'list'in power_rankings:
+        for season in power_rankings['list']:
+            if season['season'] not in rankings:
+                rankings[season['season']] = {}
+            rankings[season['season']]['power'] = {
+                'rank': season['rank'],
+                'score': season['"score"']
+            }
+
+    print(rankings)
+    return rankings
+
+
+
 def import_socket():
     screepsconsole = ScreepsConsole(
         user=app.config['screeps_user'],
