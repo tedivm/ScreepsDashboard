@@ -167,6 +167,10 @@ class ScreepsConsole(screepsapi.Socket):
                 if key == 'color':
                     continue
 
+                if key == 'severity' and not elem.isdigit():
+                    body[key] = 4
+                    continue
+
                 # If it's an integer convert it from string
                 if elem.isdigit():
                     body[key] = int(elem)
