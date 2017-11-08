@@ -22,14 +22,14 @@
     <tr>
       <td>{{ season }}</td>
       {% if 'gcl' in rankings[season] %}
-      <td class="number">{{ rankings[season]['gcl'].rank }}</td>
+      <td class="number">{{ rankings[season]['gcl'].rank + 1 }}</td>
       <td class="number">{{ '{0:,}'.format(rankings[season]['gcl'].score) }}</td>
       {% else %}
       <td></td>
       <td></td>
       {% endif %}
       {% if rankings[season].power %}
-      <td class="number">{{ rankings[season]['power'].rank }}</td>
+      <td class="number">{{ rankings[season]['power'].rank + 1 }}</td>
       <td class="number">{{ '{0:,}'.format(rankings[season]['power'].score) }}</td>
       {% else %}
       <td></td>
