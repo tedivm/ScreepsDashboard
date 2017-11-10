@@ -58,7 +58,7 @@ def memory_json(shard):
             data = False
     else:
         data = memory['data']
-    r = Response(response=json.dumps(data), status=200, mimetype="application/json")
+    r = Response(response=json.dumps(data, ensure_ascii=False), status=200, mimetype="application/json")
     r.headers["Content-Type"] = "application/json; charset=utf-8"
     return r
 
@@ -71,7 +71,7 @@ def memory_keys_json(shard):
 
     keys = list(memory['data'].keys())
     keys = sorted(keys, key=str.lower)
-    r = Response(response=json.dumps(keys), status=200, mimetype="application/json")
+    r = Response(response=json.dumps(keys, ensure_ascii=False), status=200, mimetype="application/json")
     r.headers["Content-Type"] = "application/json; charset=utf-8"
     return r
 
@@ -91,7 +91,7 @@ def memory_meta_json(shard):
         key_info = {}
         key_info['key'] = key
         data = memory['data'][key]
-        key_info['size'] = len(json.dumps(data))+len(key)+2 # 2 for the : and trailing ,
+        key_info['size'] = len(json.dumps(data, ensure_ascii=False))+len(key)+2 # 2 for the : and trailing ,
         if isinstance(data, (int, float, str, bool)):
             key_info['scalar'] = True
             key_info['data'] = data
@@ -100,7 +100,7 @@ def memory_meta_json(shard):
         ret.append(key_info)
 
 
-    r = Response(response=json.dumps(ret), status=200, mimetype="application/json")
+    r = Response(response=json.dumps(ret, ensure_ascii=False), status=200, mimetype="application/json")
     r.headers["Content-Type"] = "application/json; charset=utf-8"
     return r
 
