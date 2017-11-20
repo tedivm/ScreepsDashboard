@@ -6,12 +6,14 @@ function ScreepsConsole (config) {
 ScreepsConsole.prototype.poll = function (opts = {}) {
   var that = this
   var data = {}
-  var query_data = {}
+  var query_data = {
+    max_records: 2000
+  }
   if(!opts.start_at) {
     if(!!this.start_at) {
       query_data['start_at'] = this.start_at
     } else {
-      query_data['start_at'] = 'now-1m'
+      query_data['start_at'] = 'now-20s'
     }
   }
   if(!!opts.query) {
