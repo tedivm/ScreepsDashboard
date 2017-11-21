@@ -39,11 +39,12 @@ function startConsoleMirror () {
     }
 
     var messageHtml = $(message['raw'].replace(/(?:\r\n|\r|\n)/g, '<br />'))
-    var messageText = messageHtml.text()
-    if (messageText.startsWith(message['group'])) {
-      messageHtml.text(messageText.slice(message['group'].length + 1))
+    messageHtml.unwrap()
+    var messageText = messageHtml.html()
+    if (messageText.startsWith(`${message['group']}: `)) {
+      messageText = messageText.slice(message['group'].length + 2)
     }
-    return messageHtml.html()
+    return messageText
   }
 
   function scrollToNewestConsoleMessage () {
