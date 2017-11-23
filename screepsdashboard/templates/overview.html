@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="callout primary">
+    <div class="row column">
+        <h1 class='text-center'>{{ config['screeps_user'] }}'s Rooms</h1>
+        <p  class="lead"></p>
+    </div>
+</div>
+
+<div class="row">
+  <div class="large-8 columns">
+    <label>
+      <select id="stats_category_selector">
+        <option value="energyControl" selected="selected">Control Points</option>
+        <option value="energyConstruction">Construction Cost</option>
+        <option value="energyCreeps">Creep Cost</option>
+        <option value="energyHarvested">Energy Harvested</option>
+        <option value="powerProcessed">Power Processed</option>
+        <option value="creepsLost">Creeps Lost</option>
+        <option value="creepsProduced">Creeps Produced</option>
+      </select>
+    </label>
+
+  </div>
+  <div class="large-4 columns">
+
+    <label>
+      <select id="stats_interval_selector">
+        <option value="8">Hour</option>
+        <option value="180" selected="selected">Day</option>
+        <option value="1440">Week</option>
+      </select>
+    </label>
+  </div>
+</div>
+
+<div id="overview_list"></div>
+{% endblock %}
+{% block css_include %}
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+{% endblock %}
+
+{% block js_include %}
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
+    <script src="{{url_for ('static', filename = 'js/ScreepsOverview.js')}}"></script>
+{% endblock %}
+{% block script %}
+    {{ super() }}
+    startScreepsOverview()
+{% endblock %}

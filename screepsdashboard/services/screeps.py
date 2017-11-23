@@ -115,6 +115,17 @@ def get_rankings(user):
             }
     return rankings
 
+validIntervals = [8, 180, 1440]
+validStatNames = ['creepsLost', 'creepsProduced', 'energyConstruction', 'energyControl', 'energyCreeps', 'energyHarvested', 'powerProcessed']
+
+@cache.cache(expire=60)
+def overview(interval=8, statName='energyHarvested'):
+    if interval not in validIntervals:
+        raise ValueError("Invalid interval")
+    if statName not in validStatNames:
+        raise ValueError("Invalid stat category")
+    client = get_client()
+    return client.overview(interval=interval, statName=statName)
 
 
 def import_socket():

@@ -7,9 +7,9 @@
     <link rel="icon" href="http://www.leagueofautomatednations.com/badges/users/{{ config['screeps_user'] }}.png">
     <link rel="stylesheet" href="{{url_for('static', filename='css/foundation.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/vendor/font-awesome.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/app.css')}}">
     {% block css_include %}
     {% endblock %}
-    <link rel="stylesheet" href="{{url_for('static', filename='css/app.css')}}">
   </head>
   <body>
 
@@ -59,7 +59,10 @@
                   <i class="fa fa-trophy"></i>
                   <a href="{{url_for('rankings')}}">Rankings</a>
               </li>
-
+              <li>
+                  <i class="fa fa-line-chart"></i>
+                  <a href="{{url_for('room_overview')}}">Room Statistics</a>
+              </li>
               <li>
                   <i class="fa fa-user"></i>
                   <a href="https://screeps.com/a/#!/profile/{{ config['screeps_user'] }}">Screeps Profile</a>

@@ -293,9 +293,6 @@ function loadScreepsWalletPage (page) {
   })
 }
 
-
-
-
 function startScreepsOrders () {
   getOrders({
     'success': function (data) {
@@ -405,8 +402,6 @@ function startScreepsOrders () {
   })
 }
 
-
-
 function startScreepsSegments () {
   loadScreepsSegment()
   $('.shard_selection').click(function(event){
@@ -440,4 +435,87 @@ function loadScreepsSegment() {
   })
 
 
+}
+
+function startScreepsOverview () {
+  loadScreepsStats()
+  $( "#stats_category_selector" ).change(loadScreepsStats)
+  $( "#stats_interval_selector" ).change(loadScreepsStats)
+}
+
+var statsValueMap = {
+  'creepsLost': 'Creep Parts',
+  'creepsProduced': 'Creep Parts',
+  'energyConstruction': 'Energy',
+  'energyControl': 'Control Points',
+  'energyCreeps': 'Energy',
+  'energyHarvested': 'Energy',
+  'powerProcessed': 'Power'
+}
+
+function loadScreepsStats () {
+  var name = $( "#stats_category_selector" ).val();
+  var interval = $( "#stats_interval_selector" ).val();
+
+  var stats = getOverview(name, interval, {
+    success: function (stats) {
+      var shards = Object.keys(stats[['shards']])
+      // Identify minimum and maximums
+      let localMax = 0
+      let localMin = Infinity
+      for (var shard of shards) {
+        if (!stats['shards'][shard].rooms.length) {
+          continue
+        }
+        for (var room of stats['shards'][shard].rooms) {
+          for (stat of stats['shards'][shard]['stats'][room]) {
+            if (stat.value > localMax) {
+              localMax = stat.value
+            }
+            if (stat.value < localMin) {
+              localMin = stat.value
+            }
+          }
+        }
+      }
+
+      localMax = (Math.ceil((localMax * 1.02)/100)*100)
+      localMin = (Math.floor((localMin * 0.98)/100)*100)
+      $('#overview_list').empty()
+      // Build each graph
+      for (var shard of shards) {
+        if (!stats['shards'][shard].rooms.length) {
+          continue
+        }
+        for (var room of stats['shards'][shard].rooms) {
+
+          var divId = `overview_graph_${shard}_${room}`
+
+          $('#overview_list').append(`<div>
+            <h4 class="text-center"><a href="https://screeps.com/a/#!/room/${shard}/${room}">${room} ${shard}</a></h4>
+            <div id="${divId}" style="height: 250px;"></div>
+          </div>`)
+
+          new Morris.Line({
+            // ID of the element in which to draw the chart.
+            element: divId,
+            // Chart data records -- each entry in this array corresponds to a point on
+            // the chart.
+            data: stats['shards'][shard]['stats'][room],
+            // The name of the data record attribute that contains x-values.
+            xkey: 'endTime',
+            // A list of names of data record attributes that contain y-values.
+            ykeys: ['value'],
+            // Labels for the ykeys -- will be displayed when you hover over the
+            // chart.
+            labels: [statsValueMap[name]],
+
+            ymax: localMax,
+            ymin: localMin,
+            resize: true
+          });
+        }
+      }
+    }
+  })
 }

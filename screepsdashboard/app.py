@@ -1,4 +1,4 @@
-from flask import Flask, session, redirect, url_for, escape, request, render_template, flash, send_from_directory, Response
+from flask import Flask, abort, session, redirect, url_for, escape, request, render_template, flash, send_from_directory, Response
 from flask_cors import CORS, cross_origin
 import json
 import pypandoc
@@ -192,3 +192,24 @@ def rankings():
     seasons = list(rankings.keys())
     seasons.sort(reverse=True)
     return render_template("rankings.html", rankings=rankings, seasons=seasons)
+
+
+#
+# Rooms Overview
+#
+
+@app.route('/rooms/overview.html')
+def room_overview():
+    return render_template("overview.html")
+
+
+@app.route('/rooms/overview_<statName>_<int:statInterval>.json')
+def room_overviews_json(statName, statInterval):
+    try:
+        stats = screeps.overview(interval=statInterval, statName=statName)
+        r = Response(response=json.dumps(stats), status=200, mimetype="application/json")
+        r.headers["Content-Type"] = "application/json; charset=utf-8"
+        return r
+    except ValueError as e:
+        print("%s %s %s" % (e, statInterval, statName))
+        abort(404)
