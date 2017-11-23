@@ -1,5 +1,18 @@
 $(document).foundation()
 
+$.fn.animateRotate = function(angle, duration, easing, complete) {
+    var args = $.speed(duration, easing, complete)
+    var step = args.step
+    return this.each(function(i, e) {
+        args.step = function(now) {
+            $.style(e, 'transform', 'rotate(' + now + 'deg)')
+            if (step) return step.apply(this, arguments)
+        }
+
+        $({deg: 0}).animate({deg: angle}, args)
+    })
+}
+
 const severity = {
   0: 'trace',
   1: 'debug',
@@ -441,6 +454,10 @@ function startScreepsOverview () {
   loadScreepsStats()
   $( "#stats_category_selector" ).change(loadScreepsStats)
   $( "#stats_interval_selector" ).change(loadScreepsStats)
+  $("#stats_refresh").click(function () {
+    new Promise((resolver) => loadScreepsStats())
+    $("#stats_refresh i").animateRotate(360, 500, 'linear')
+  })
 }
 
 var statsValueMap = {
@@ -503,7 +520,7 @@ function loadScreepsStats () {
         localMin = (Math.floor((localMin * 0.98)))
       }
 
-      if (localMin / localMax < 0.02) {
+      if (localMin / localMax <= 0.02) {
         localMin = 0
       }
 
