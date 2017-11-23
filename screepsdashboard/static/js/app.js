@@ -479,8 +479,30 @@ function loadScreepsStats () {
         }
       }
 
-      localMax = (Math.ceil((localMax * 1.02)/100)*100)
-      localMin = (Math.floor((localMin * 0.98)/100)*100)
+      if (localMax > 1000) {
+        localMax = (Math.ceil((localMax * 1.02) / 1000) * 1000)
+      } else if (localMax > 100) {
+        localMax = (Math.ceil((localMax * 1.02) / 100) * 100)
+      } else if (localMax > 50){
+        localMax = (Math.ceil((localMax * 1.02) / 10) * 10)
+      } else if (localMax > 10){
+        localMax = (Math.ceil((localMax * 1.02) / 4) * 4)
+      } else {
+        localMax = Math.max(Math.ceil((localMax * 1.02)), 4)
+      }
+
+      if (localMin > 1000) {
+        localMin = (Math.floor((localMin * 0.98) / 1000) * 1000)
+      } else if (localMin > 100) {
+        localMin = (Math.floor((localMin * 0.98) / 100) * 100)
+      } else if (localMin > 50){
+        localMin = (Math.floor((localMin * 0.98) / 10) * 10)
+      } else if (localMin > 10){
+        localMin = (Math.floor((localMin * 0.98) / 4) * 4)
+      } else {
+        localMin = (Math.floor((localMin * 0.98)))
+      }
+
       $('#overview_list').empty()
       // Build each graph
       for (var shard of shards) {
