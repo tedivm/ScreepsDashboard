@@ -503,6 +503,10 @@ function loadScreepsStats () {
         localMin = (Math.floor((localMin * 0.98)))
       }
 
+      if (localMin / localMax < 0.02) {
+        localMin = 0
+      }
+
       $('#overview_list').empty()
       // Build each graph
       for (var shard of shards) {
@@ -534,7 +538,9 @@ function loadScreepsStats () {
 
             ymax: localMax,
             ymin: localMin,
-            resize: true
+            resize: true,
+            hideHover: true,
+            parseTime: false
           });
         }
       }
