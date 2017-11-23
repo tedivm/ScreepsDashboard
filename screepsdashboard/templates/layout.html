@@ -29,7 +29,7 @@
             <h5 class="navbar-sitename">
               Screeps {{ config['screeps_user'] }}<br>
               GCL: {{ get_gcl_from_points(getuserinfo()['gcl']) }}<br>
-              Credits: {{ '{0:,}'.format(getuserinfo()['money']).split(".")[0] }}<br>
+              <a href="{{url_for('wallet')}}">Credits: {{ '{0:,}'.format(getuserinfo()['money']).split(".")[0] }}</a><br>
             </h5>
             <hr>
 

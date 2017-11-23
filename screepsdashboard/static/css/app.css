@@ -26,6 +26,11 @@ ul.navbar{
     text-align: center;
 }
 
+.navbar-sitename a {
+  color:inherit;
+  text-decoration: none;
+}
+
 ul.navbar a {
     color: #ddd;
 }
