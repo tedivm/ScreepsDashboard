@@ -41,8 +41,8 @@ function startConsoleMirror () {
     //console.log(Object.keys(message))
 
     var message_html = '<div class="columns small-1">' + message['tick'] + '</div>'
-    message_html += '<div class="columns small-1">' + message['group'] + '</div>'
-    message_html += '<div class="columns small-10">' + filterHtml(message) + '</div>'
+    message_html += '<div class="columns small-2">' + message['group'] + '</div>'
+    message_html += '<div class="columns small-9">' + filterHtml(message) + '</div>'
     $('#console_box').append('<div class="row slog ' + severityClass + rowClass + '">' + message_html + '</div>')
   }
 
