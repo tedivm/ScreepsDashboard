@@ -68,8 +68,10 @@ function startConsoleMirror () {
     }
   }
 
+  var startQuery = $('#console_query').val()
   var screepsconsole = new ScreepsConsole({})
   screepsconsole.poll({
+    query: startQuery,
     on_message: appendToConsole,
     on_finish: scrollToNewestConsoleMessage,
     timeout: 500
@@ -77,6 +79,7 @@ function startConsoleMirror () {
 
   var consoleInterval = setInterval(function () {
     screepsconsole.poll({
+      query: startQuery,
       on_message: appendToConsole,
       on_finish: scrollToNewestConsoleMessage,
       timeout: 500
