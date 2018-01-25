@@ -72,16 +72,16 @@ function startConsoleMirror () {
   screepsconsole.poll({
     on_message: appendToConsole,
     on_finish: scrollToNewestConsoleMessage,
-    timeout: 1000
+    timeout: 500
   })
 
   var consoleInterval = setInterval(function () {
     screepsconsole.poll({
       on_message: appendToConsole,
       on_finish: scrollToNewestConsoleMessage,
-      timeout: 1000
+      timeout: 500
     })
-  }, 1500)
+  }, 750)
 
 
   $('#console_query').on('keyup', function (e) {
@@ -94,9 +94,9 @@ function startConsoleMirror () {
           query: query,
           on_message: appendToConsole,
           on_finish: scrollToNewestConsoleMessage,
-          timeout: 1000
+          timeout: 500
         })
-      }, 1500)
+      }, 750)
     }
   })
 }
