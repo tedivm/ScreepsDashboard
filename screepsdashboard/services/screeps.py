@@ -8,9 +8,13 @@ import json
 from screepsdashboard import app
 
 def get_client():
-    user = app.config['screeps_user']
-    password = app.config['screeps_password']
-    return screepsapi.API(user, password)
+    if 'screeps_token' in app.config:
+        apitoken = app.config['screeps_token']
+        return screepsapi.API(token=apitoken)
+    else:
+        user = app.config['screeps_user']
+        password = app.config['screeps_password']
+        return screepsapi.API(user, password)
 
 
 def get_gcl(user):
