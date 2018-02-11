@@ -52,7 +52,7 @@ setup(
     'PyYAML>=3.12,<3.13',
     'lxml==3.8.0',
     'requests>=2.18.0,<2.19',
-    'screepsapi>=0.5,<0.6'
+    'screepsapi>=0.5.1,<0.6'
   ],
 
   extras_require={

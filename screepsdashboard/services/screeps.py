@@ -133,11 +133,18 @@ def overview(interval=8, statName='energyHarvested'):
 
 
 def import_socket():
-    screepsconsole = ScreepsConsole(
-        user=app.config['screeps_user'],
-        password=app.config['screeps_password'],
-        ptr=app.config.get('screeps_ptr', False),
-    )
+    if 'screeps_token' in app.config:
+        screepsconsole = ScreepsConsole(
+            token=app.config['screeps_token'],
+            ptr=app.config.get('screeps_ptr', False),
+        )
+    else:
+        screepsconsole = ScreepsConsole(
+            user=app.config['screeps_user'],
+            password=app.config['screeps_password'],
+            ptr=app.config.get('screeps_ptr', False),
+        )
+
     screepsconsole.set_es_host(
         host=app.config.get('es_host', 'localhost'),
         index_prefix=app.config.get('es_index_prefix', 'screepsdash-%s-' % (app.config['screeps_user'].lower(),)),
