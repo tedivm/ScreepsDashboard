@@ -38,8 +38,6 @@ function startConsoleMirror () {
       message['group'] = '-'
     }
 
-    //console.log(Object.keys(message))
-
     var message_html = '<div class="columns small-1">' + message['tick'] + '</div>'
     message_html += '<div class="columns small-2">' + message['group'] + '</div>'
     message_html += '<div class="columns small-9">' + filterHtml(message) + '</div>'
@@ -47,11 +45,12 @@ function startConsoleMirror () {
   }
 
   function filterHtml (message) {
-    if (!message['raw'].includes('font')) {
-      return message['raw'].replace(/(?:\r\n|\r|\n)/g, '<br />')
+    const messageRawText = message['raw'] ? message['raw'] : message['message']
+    if (!messageRawText.includes('font')) {
+      return messageRawText.replace(/(?:\r\n|\r|\n)/g, '<br />')
     }
 
-    var messageHtml = $(message['raw'].replace(/(?:\r\n|\r|\n)/g, '<br />'))
+    var messageHtml = $(messageRawText.replace(/(?:\r\n|\r|\n)/g, '<br />'))
     messageHtml.unwrap()
     var messageText = messageHtml.html()
     if (messageText.startsWith(`${message['group']}: `)) {
