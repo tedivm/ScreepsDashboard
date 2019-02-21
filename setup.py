@@ -40,19 +40,21 @@ setup(
   ],
 
   install_requires=[
-    'beaker==1.8.0',
+    'beaker>=1.8.0',
     'beautifulsoup4>=4.6.0,<4.7.0',
     'click>=5.0,<6.0',
     'elasticsearch>=5.0.0,<6.0.0',
     'Flask>=0.12.2,<0.13.0',
     'flask_cors>=3.0,<3.1',
     'gunicorn>=19.7.1,<20.0.0',
-    'markdown>=2.6.9<2.7',
+    'markdown>=2.6.9,<2.7',
     'py-gfm>=0.1.3,<0.2',
-    'PyYAML>=3.12,<3.13',
-    'lxml==3.8.0',
-    'requests>=2.18.0,<2.19',
-    'screepsapi>=0.5.1,<0.6'
+    'PyYAML>=3.12,<4',
+    'lxml>=4.0, <5.0',
+    'requests>=2.18.0,<3',
+    'screepsapi>=0.5.1,<0.6',
+    'websocket-client==0.52.0',
+    "pypandoc>=1.4.0"
   ],
 
   extras_require={

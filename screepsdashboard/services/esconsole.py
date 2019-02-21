@@ -6,7 +6,8 @@ import time
 from screepsdashboard import app
 
 def query_records(query, start_at = 'now-1m', max_records=100, order='asc', default_field="_all"):
-    es = Elasticsearch()
+    host = app.config.get('es_host', 'localhost')
+    es = Elasticsearch([host])
     index = app.config.get('es_index_prefix', 'screepsdash-%s-' % (app.config['screeps_user'].lower(),))
     results = es.search(index="%sconsole*" % (index), doc_type='log', body={
       "size": max_records,
